@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chess Board Assignment</title>
+    <style>
+        body {
+            background: #dac18b;
+            padding: 20px;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            background: black;
+        }
+
+        td {
+            width: 50px;
+            height: 50px;
+        }
+
+        tr:nth-child(odd) td:nth-child(even),
+        tr:nth-child(even) td:nth-child(odd) {
+            background: white;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr class="a">
+            <td class="a1"></td>
+            <td class="a2"></td>
+            <td class="a3"></td>
+            <td class="a4"></td>
+            <td class="a5"></td>
+            <td class="a6"></td>
+            <td class="a7"></td>
+            <td class="a8"></td>
+        </tr>
+        <tr class="b">
+            <td class="b1"></td>
+            <td class="b2"></td>
+            <td class="b3"></td>
+            <td class="b4"></td>
+            <td class="b5"></td>
+            <td class="b6"></td>
+            <td class="b7"></td>
+            <td class="b8"></td>
+        </tr>
+        <tr class="c">
+            <td class="c1"></td>
+            <td class="c2"></td>
+            <td class="c3"></td>
+            <td class="c4"></td>
+            <td class="c5"></td>
+            <td class="c6"></td>
+            <td class="c7"></td>
+            <td class="c8"></td>
+        </tr>
+        <tr class="d">
+            <td class="d1"></td>
+            <td class="d2"></td>
+            <td class="d3"></td>
+            <td class="d4"></td>
+            <td class="d5"></td>
+            <td class="d6"></td>
+            <td class="d7"></td>
+            <td class="d8"></td>
+        </tr>
+        <tr class="e">
+            <td class="e1"></td>
+            <td class="e2"></td>
+            <td class="e3"></td>
+            <td class="e4"></td>
+            <td class="e5"></td>
+            <td class="e6"></td>
+            <td class="e7"></td>
+            <td class="e8"></td>
+        </tr>
+        <tr class="f">
+            <td class="f1"></td>
+            <td class="f2"></td>
+            <td class="f3"></td>
+            <td class="f4"></td>
+            <td class="f5"></td>
+            <td class="f6"></td>
+            <td class="f7"></td>
+            <td class="f8"></td>
+        </tr>
+        <tr class="g">
+            <td class="g1"></td>
+            <td class="g2"></td>
+            <td class="g3"></td>
+            <td class="g4"></td>
+            <td class="g5"></td>
+            <td class="g6"></td>
+            <td class="g7"></td>
+            <td class="g8"></td>
+        </tr>
+        <tr class="h">
+            <td class="h1"></td>
+            <td class="h2"></td>
+            <td class="h3"></td>
+            <td class="h4"></td>
+            <td class="h5"></td>
+            <td class="h6"></td>
+            <td class="h7"></td>
+            <td class="h8"></td>
+        </tr>
+    </table>
+
+    <script>
+
+        document.addEventListener('click', function (event) {
+            event.preventDefault();
+            let diagonals = getDiagonals(event.target.className);
+            paintRed(diagonals);
+
+        }, false);
+
+        function getDiagonals(cell) {
+            let rowIndex = ['1', '2', '3', '4', '5', '6', '7', '8'];
+            let columnIndex = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+            let currentCoordinate = cell.split('').map(e => {
+                if (columnIndex.indexOf(e) !== -1) {
+                    return columnIndex.indexOf(e) + 1;
+                } else if (rowIndex.indexOf(e) !== -1) {
+                    return rowIndex.indexOf(e) + 1;
+                }
+                return e
+            })
+            let x = currentCoordinate[0];
+            let y = currentCoordinate[1];
+            let diagTop = [];
+            let diagBottom = [];
+            // BOTTOM DIAGONALS
+            for (let i = 1; y + i < 9; i++) {
+                if (columnIndex[x + i - 1] !== undefined) diagTop.push(`${columnIndex[x + i - 1]}${y + i}`)
+            }
+
+            for (let i = 1; y - i >= 1; i++) {
+                if (columnIndex[x + i - 1] !== undefined) diagTop.push(`${columnIndex[x + i - 1]}${y - i}`)
+            }
+
+            // TOP DIAGONALS
+            for (let i = 1; x - i >= 1; i++) {
+                if (columnIndex[x - i - 1] !== undefined) diagBottom.push(`${columnIndex[x - i - 1]}${y - i}`);
+            }
+
+            for (let i = 1; x + i < 9; i++) {
+                if (columnIndex[x - i - 1] !== undefined) diagBottom.push(`${columnIndex[x - i - 1]}${y + i}`);
+            }
+
+
+            return diagTop.concat(diagBottom);
+        }
+
+        function paintRed(cells) {
+            console.log("Paint red is called on", cells)
+            cells.forEach(cell => {
+                let domElement = document.getElementsByClassName(cell);
+                domElement[0].style.backgroundColor = "red";
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>
